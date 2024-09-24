@@ -1,0 +1,216 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-08 18:33:44.621853",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "billing_id",
+  "item_code",
+  "item_id",
+  "basis",
+  "date",
+  "offering",
+  "billing_milestone",
+  "billing",
+  "billing_amt",
+  "hours",
+  "cpm",
+  "cpm_details",
+  "activity_status",
+  "is_paid",
+  "is_billed",
+  "invoice_reference",
+  "section_break_kddki",
+  "customer",
+  "create_invoice",
+  "column_break_yxmmj",
+  "add_new_row",
+  "from_april",
+  "billing_based_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "billing_id",
+   "fieldtype": "Data",
+   "label": "Billing ID"
+  },
+  {
+   "columns": 2,
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "item_id",
+   "fieldtype": "Data",
+   "label": "Item Id",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 2,
+   "fieldname": "basis",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Basis",
+   "options": "\nDate\nActivity"
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 2,
+   "depends_on": "eval: doc.basis == \"Date\"",
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "read_only_depends_on": "eval: doc.basis === \"Date\""
+  },
+  {
+   "depends_on": "eval: doc.basis == \"Activity\";",
+   "fieldname": "offering",
+   "fieldtype": "Link",
+   "label": "Offering",
+   "options": "Offering",
+   "read_only": 1,
+   "read_only_depends_on": "eval: !doc.basis == \"Activity\";"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.basis == \"Activity\"",
+   "fieldname": "billing_milestone",
+   "fieldtype": "Data",
+   "label": "Billing Milestone"
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 1,
+   "default": "0",
+   "depends_on": "eval: !([\"Managed services\", \"Hourly Rate\"].includes(doc.offering))",
+   "fieldname": "billing",
+   "fieldtype": "Float",
+   "label": "Billing %",
+   "precision": "2"
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 1,
+   "fieldname": "billing_amt",
+   "fieldtype": "Currency",
+   "label": "Billing",
+   "options": "currency"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: [\"Managed services\", \"Hourly Rate\"].includes(doc.offering)",
+   "fieldname": "hours",
+   "fieldtype": "Float",
+   "label": "Hours",
+   "read_only_depends_on": "eval: !([\"Managed services\", \"Hourly Rate\"].includes(doc.offering))"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "cpm",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "CPM"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "cpm_details",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "CPM Details"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "activity_status",
+   "fieldtype": "Check",
+   "label": "Is Completed",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "is_paid",
+   "fieldtype": "Check",
+   "label": "Is Paid",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "is_billed",
+   "fieldtype": "Check",
+   "label": "Is Billed",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "invoice_reference",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Invoice Reference",
+   "options": "Sales Invoice"
+  },
+  {
+   "fieldname": "section_break_kddki",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "bold": 1,
+   "depends_on": "eval: doc.cpm_details != null",
+   "fieldname": "create_invoice",
+   "fieldtype": "Button",
+   "label": "Create Invoice"
+  },
+  {
+   "fieldname": "column_break_yxmmj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "bold": 1,
+   "fieldname": "add_new_row",
+   "fieldtype": "Button",
+   "label": "Add New Row"
+  },
+  {
+   "default": "0",
+   "fieldname": "from_april",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "From April"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Percentage",
+   "fieldname": "billing_based_on",
+   "fieldtype": "Select",
+   "label": "Billing Based On",
+   "options": "Amount\nPercentage"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-09-19 15:01:00.813670",
+ "modified_by": "Administrator",
+ "module": "Go1 Pulse",
+ "name": "Sales Order Billing Method",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,26 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2024-07-09 15:32:38.292853",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2024-09-19 15:04:35.843458",
+ "modified_by": "Administrator",
+ "module": "Go1 Pulse",
+ "name": "Employee Cost Allocation",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Timesheet Aggregator",
+ "report_name": "Employee Cost Allocation",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ]
+}

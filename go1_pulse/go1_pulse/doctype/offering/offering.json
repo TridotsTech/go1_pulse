@@ -1,0 +1,136 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:offering_name",
+ "creation": "2024-07-08 18:30:13.352216",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "offering_name",
+  "column_break_mag6p",
+  "classification",
+  "section_break_5lzyp",
+  "billing_method",
+  "column_break_isdro",
+  "revenue_method",
+  "section_break_7tzor",
+  "offering_income_account",
+  "company_wide_linked_project",
+  "common_projects",
+  "section_break_zwyu5",
+  "accounting_details",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "offering_name",
+   "fieldtype": "Data",
+   "label": "Offering Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_mag6p",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "classification",
+   "fieldtype": "Link",
+   "label": "Classification",
+   "options": "Offering Classification"
+  },
+  {
+   "fieldname": "section_break_5lzyp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "billing_method",
+   "fieldtype": "Link",
+   "label": "Billing Method",
+   "options": "Billing Method"
+  },
+  {
+   "fieldname": "column_break_isdro",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "revenue_method",
+   "fieldtype": "Select",
+   "label": "Revenue Method",
+   "options": "\nEqual revenue over the contract period\n100% revenue on delivery, irrespective of billing time\nPOC\nHours rate\nUnits rate"
+  },
+  {
+   "fieldname": "section_break_7tzor",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "offering_income_account",
+   "fieldtype": "Link",
+   "label": "Income Account",
+   "options": "Account"
+  },
+  {
+   "default": "0",
+   "fieldname": "company_wide_linked_project",
+   "fieldtype": "Check",
+   "label": "Company-wide linked project"
+  },
+  {
+   "allow_bulk_edit": 1,
+   "depends_on": "eval:doc.company_wide_linked_project == 1",
+   "fieldname": "common_projects",
+   "fieldtype": "Table",
+   "label": "Common Projects",
+   "mandatory_depends_on": "eval:doc.company_wide_linked_project == 1",
+   "options": "Associated Common Project"
+  },
+  {
+   "fieldname": "section_break_zwyu5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_bulk_edit": 1,
+   "collapsible": 1,
+   "fieldname": "accounting_details",
+   "fieldtype": "Table",
+   "label": "Accounting Details",
+   "options": "Associated Offering Account"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Offering",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-19 15:01:04.046981",
+ "modified_by": "Administrator",
+ "module": "Go1 Pulse",
+ "name": "Offering",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

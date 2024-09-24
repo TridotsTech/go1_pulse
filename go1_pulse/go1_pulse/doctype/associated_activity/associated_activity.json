@@ -1,0 +1,68 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-08 17:51:47.554553",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "billing_milestone",
+  "completed",
+  "billing_reference",
+  "is_billed",
+  "notification_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "billing_milestone",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Billing Milestone",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "default": "0",
+   "fieldname": "completed",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Completed",
+   "read_only_depends_on": "eval: doc.is_billed || doc.notification_status"
+  },
+  {
+   "fieldname": "billing_reference",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Billing_Reference"
+  },
+  {
+   "columns": 2,
+   "default": "0",
+   "fieldname": "is_billed",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Billed",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "notification_status",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Notification Status"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-09-19 15:01:13.434610",
+ "modified_by": "Administrator",
+ "module": "Go1 Pulse",
+ "name": "Associated Activity",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,63 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-09 16:09:56.027046",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "modification_approver",
+  "column_break_ujak8",
+  "head_of_controllership"
+ ],
+ "fields": [
+  {
+   "fieldname": "modification_approver",
+   "fieldtype": "Link",
+   "label": "Modification Approver",
+   "options": "Role"
+  },
+  {
+   "fieldname": "column_break_ujak8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "head_of_controllership",
+   "fieldtype": "Link",
+   "label": "Head of Controllership",
+   "options": "Role"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-09-19 15:00:45.707520",
+ "modified_by": "Administrator",
+ "module": "Go1 Pulse",
+ "name": "SO Approver Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "All",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

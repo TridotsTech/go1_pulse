@@ -1,0 +1,279 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-07-08 18:33:13.738784",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "customer",
+  "column_break_uybqb",
+  "end_customer",
+  "section_break_3pbwt",
+  "is_channel_partner",
+  "cost_center",
+  "project",
+  "offering_classification",
+  "sales_order",
+  "sales_order_status",
+  "revenue_recognition_debit_acount",
+  "currency",
+  "is_delivered",
+  "is_billed",
+  "date_of_completion",
+  "column_break_n4ywp",
+  "mandate",
+  "offering",
+  "sales_order_item",
+  "revenue_recognition_credit_acount",
+  "revenue_recognition_voucher",
+  "section_break_9vjzf",
+  "recognised_amount",
+  "activities_status",
+  "hours_or_units",
+  "amount",
+  "exchange_rate",
+  "send_notification",
+  "update_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "no_copy": 1,
+   "options": "CPM - .YYYY.-",
+   "print_hide": 1,
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer ",
+   "options": "Customer",
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "fieldname": "column_break_uybqb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: cur_frm.doc.is_channel_partner == 1",
+   "fieldname": "end_customer",
+   "fieldtype": "Link",
+   "label": "End Customer",
+   "options": "Customer",
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "fieldname": "section_break_3pbwt",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fetch_from": "customer.is_channel_partner",
+   "fieldname": "is_channel_partner",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Is Channel Partner"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Project ",
+   "options": "Project",
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "fetch_from": "offering.classification",
+   "fieldname": "offering_classification",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Offering Classification",
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "sales_order.status",
+   "fieldname": "sales_order_status",
+   "fieldtype": "Data",
+   "label": "Sales Order Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "revenue_recognition_debit_acount",
+   "fieldtype": "Link",
+   "label": "Debit Acount",
+   "options": "Account",
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "SO Currency",
+   "options": "Currency",
+   "read_only": 1,
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: [\"Completed Contract\", \"Perpertual License\"].includes(doc.offering_classification)",
+   "fieldname": "is_delivered",
+   "fieldtype": "Check",
+   "label": "Is Delivered",
+   "read_only_depends_on": "eval: doc.revenue_recognition_voucher"
+  },
+  {
+   "depends_on": "eval: [\"Completed Contract\", \"Perpertual License\"].includes(doc.offering_classification) && doc.is_delivered",
+   "fieldname": "date_of_completion",
+   "fieldtype": "Date",
+   "label": "Date Of Completion",
+   "mandatory_depends_on": "eval: doc.is_delivered",
+   "read_only_depends_on": "eval: doc.revenue_recognition_voucher"
+  },
+  {
+   "fieldname": "column_break_n4ywp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mandate",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Mandate",
+   "options": "Mandate",
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "fieldname": "offering",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Offering",
+   "options": "Offering",
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "fieldname": "sales_order_item",
+   "fieldtype": "Data",
+   "label": "Sales Order Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "revenue_recognition_credit_acount",
+   "fieldtype": "Link",
+   "label": "Credit Acount",
+   "options": "Account",
+   "read_only_depends_on": "eval: doc.sales_order"
+  },
+  {
+   "fieldname": "revenue_recognition_voucher",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Revenue Recognition Voucher",
+   "options": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_9vjzf",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "depends_on": "eval: doc.offering_classification == \"Percentage of Completion\"",
+   "fieldname": "recognised_amount",
+   "fieldtype": "Currency",
+   "label": "Recognised Amount",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: [\"Recurring Revenue\", \"Perpertual License\", \"Completed Contract\", \"Fixed Price - POC\", \"Percentage of Completion\"].includes(doc.offering_classification)",
+   "fieldname": "activities_status",
+   "fieldtype": "Table",
+   "label": "Activities Status",
+   "options": "Associated Activity"
+  },
+  {
+   "depends_on": "eval: [\"Unit Rate\", \"Hourly Rate\", \"Time and Material\"].includes(doc.offering_classification)",
+   "fieldname": "hours_or_units",
+   "fieldtype": "Table",
+   "label": "Hours / Units",
+   "options": "Common Project Hour Or Unit"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "hidden": 1,
+   "label": "Amount"
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "SO Exchange Rate"
+  },
+  {
+   "fieldname": "send_notification",
+   "fieldtype": "Button",
+   "label": "Send Notification",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "update_status",
+   "fieldtype": "Button",
+   "label": "Update Status",
+   "permlevel": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_billed",
+   "fieldtype": "Check",
+   "label": "Is Billed",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-19 15:00:40.196929",
+ "modified_by": "Administrator",
+ "module": "Go1 Pulse",
+ "name": "Common Project Mapper",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

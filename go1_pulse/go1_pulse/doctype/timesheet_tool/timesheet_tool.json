@@ -1,0 +1,121 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-08 19:13:37.350549",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "acting_as",
+  "projects",
+  "from_date",
+  "get_details",
+  "column_break_3es4e",
+  "employees",
+  "to_date",
+  "section_break_xd5mm",
+  "timesheet"
+ ],
+ "fields": [
+  {
+   "fieldname": "acting_as",
+   "fieldtype": "Section Break",
+   "label": "Acting As Administrator"
+  },
+  {
+   "fieldname": "projects",
+   "fieldtype": "Table MultiSelect",
+   "label": "Projects",
+   "options": "Timesheet Tool Project"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date"
+  },
+  {
+   "fieldname": "get_details",
+   "fieldtype": "Button",
+   "label": "Get Details"
+  },
+  {
+   "fieldname": "column_break_3es4e",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "employees",
+   "fieldtype": "Table MultiSelect",
+   "label": "Employees",
+   "options": "Timesheet Tool Employee"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date"
+  },
+  {
+   "fieldname": "section_break_xd5mm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "timesheet",
+   "fieldtype": "Table",
+   "label": "Timesheet Detail",
+   "options": "Timesheet Tool Timesheet"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-09-19 15:00:50.935057",
+ "modified_by": "Administrator",
+ "module": "Go1 Pulse",
+ "name": "Timesheet Tool",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Projects Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "HR User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
