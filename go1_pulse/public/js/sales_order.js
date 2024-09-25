@@ -1,6 +1,6 @@
 
 frappe.ui.form.on('Sales Order', {
-    
+
     //Generating Billing Methods
     get_billing_methods: function(frm){
         if(cur_frm.doc.docstatus === 0){
@@ -307,9 +307,9 @@ var update_offering_hsn =  function(frm, cdt, cdn){
                         args: {"app_name":"india_compliance"},
                         callback:function(r){
                             if(r.message.status=="Success"){
-                                frappe.db.get_value("Offering", child.offering, ["custom_hsnsac"]).then(function(value) {
-                                if (value.message.custom_hsnsac){
-                                    var hsn_code =  value.message.custom_hsnsac
+                                frappe.db.get_value("Offering", child.offering, ["custom_hsnac"]).then(function(value) {
+                                if (value.message.custom_hsnac){
+                                    var hsn_code =  value.message.custom_hsnac
                                     console.log(hsn_code)
                                     frappe.model.set_value(cdt, cdn, "gst_hsn_code",  hsn_code);
                                 }
