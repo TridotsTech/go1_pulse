@@ -242,9 +242,16 @@ frappe.ui.form.on('Sales Order Item', {
 		update_offering_hsn(frm, cdt, cdn);
 	},
 
-
+    actual_start_date: function(frm, cdt, cdn){
+        let row = locals[cdt][cdn];
+        if(row.actual_start_date){
+            let end_date = frappe.datetime.add_days(frappe.datetime.add_months(row.actual_start_date,12), -1);
+            frappe.model.set_value(cdt, cdn, "end_date", end_date);
+        }
+    },
     start_date: function(frm, cdt, cdn){
         let row = locals[cdt][cdn];
+        console.log(row)
         if(!row.actual_start_date){
             let end_date = frappe.datetime.add_days(frappe.datetime.add_months(row.start_date,12), -1);
             frappe.model.set_value(cdt, cdn, "end_date", end_date);
@@ -307,9 +314,9 @@ var update_offering_hsn =  function(frm, cdt, cdn){
                         args: {"app_name":"india_compliance"},
                         callback:function(r){
                             if(r.message.status=="Success"){
-                                frappe.db.get_value("Offering", child.offering, ["custom_hsnac"]).then(function(value) {
-                                if (value.message.custom_hsnac){
-                                    var hsn_code =  value.message.custom_hsnac
+                                frappe.db.get_value("Offering", child.offering, ["custom_hsnsac"]).then(function(value) {
+                                if (value.message.custom_hsnsac){
+                                    var hsn_code =  value.message.custom_hsnsac
                                     console.log(hsn_code)
                                     frappe.model.set_value(cdt, cdn, "gst_hsn_code",  hsn_code);
                                 }
