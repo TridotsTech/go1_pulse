@@ -958,8 +958,6 @@ def revenue_recognition_engine_query(condition=None,date=None):
 				`tabSales Order Item` soi ON so.name = soi.parent
 			WHERE
 				so.docstatus = 1
-			AND
-				so.custom_so_status = 'Open' 
 			AND soi.parent = so.name
 			AND
 				soi.start_date <= '{date}'

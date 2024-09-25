@@ -31,7 +31,7 @@ frappe.ui.form.on("Timesheet", {
             const row = locals[cdt][cdn];
             if(row.project){
                 return {
-                    "query":"revenue.timesheet.get_project_activity_types",
+                    "query":"go1_pulse.timesheet.get_project_activity_types",
                     "filters": {
                         "project":row.project
                     }
@@ -49,7 +49,7 @@ frappe.ui.form.on("Timesheet", {
        
         if (frm.doc.log_date < get_date(currentDateTime) && frm.doc.log_date != "") {
             frappe.call({
-                method: "revenue.timesheet.check_absent",
+                method: "go1_pulse.timesheet.check_absent",
                 args: {
                     "date": frm.doc.log_date,
                     "employee": frm.doc.employee
@@ -175,7 +175,7 @@ frappe.ui.form.on("Timesheet", {
                             columns.description.df.read_only = 1
                         }
                         frappe.call({
-                            method: "revenue.timesheet.send_mail",
+                            method: "go1_pulse.timesheet.send_mail",
                             args: {
                                 "employee": frm.doc.employee,
                                 "name": frm.doc.name
@@ -244,7 +244,7 @@ frappe.ui.form.on("Timesheet", {
 });
 var get_date = function get_date(old_date,old_hours=0){
     return frappe.call({
-        method:"revenue.timesheet.get_date",
+        method:"go1_pulse.timesheet.get_date",
         async:false,
         args:{
             "date":old_date,
