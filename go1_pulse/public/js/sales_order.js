@@ -18,7 +18,7 @@ var update_offering_hsn =  function(frm, cdt, cdn){
     var child = locals[cdt][cdn];
     if ((child.offering) && (child.item_code)){
         frappe.call({
-                        method: "contetra_customisations.api.check_installed_app",
+                        method: "go1_pulse.api.check_installed_app",
                         args: {"app_name":"india_compliance"},
                         callback:function(r){
                             if(r.message.status=="Success"){
