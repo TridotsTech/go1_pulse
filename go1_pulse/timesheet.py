@@ -5,7 +5,7 @@ from frappe import _
 from frappe.model.utils.user_settings import get_user_settings
 import json
 from datetime import datetime, timedelta
-from revenue.queries import get_project_activity_types_query, get_filtered_users_query,fetch_projects_query,get_employee_query,get_data_query
+from go1_pulse.queries import get_project_activity_types_query, get_filtered_users_query,fetch_projects_query,get_employee_query,get_data_query
 
 @frappe.whitelist()
 def get_project_activity_types( txt, filters):
@@ -334,7 +334,7 @@ def update_timesheet_fields(login_manager):
 		user_settings = get_user_settings("Timesheet")
 
 		if not user_settings or user_settings == "{}":
-			path = frappe.get_module_path("revenue")
+			path = frappe.get_module_path("go1_pulse")
 			timesheet_json = os.path.join(path, "time_sheet_fields.json")
 			with open(timesheet_json) as jsonFile:
 				jsonObject = json.load(jsonFile)
@@ -349,7 +349,7 @@ def update_all_user_fields():
 	if frappe.session.user!="Guest":
 		users = frappe.db.get_all("User")
 		for x in users:
-			path = frappe.get_module_path("revenue")
+			path = frappe.get_module_path("go1_pulse")
 			timesheet_json = os.path.join(path, "time_sheet_fields.json")
 			with open(timesheet_json) as jsonFile:
 				jsonObject = json.load(jsonFile)
