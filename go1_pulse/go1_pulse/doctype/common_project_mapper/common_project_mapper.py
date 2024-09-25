@@ -249,14 +249,14 @@ def validations_for_msgprint(datas=None,posting_date=None):
                 doc = frappe.get_doc("Sales Order", so)
                 for row in doc.items:
                     if row.revenue_method == "Equal revenue over the contract period":
-                        
+                        frappe.log_error(title="lob",message=row.line_of_business)
                         credit_account = frappe.get_value("Associated Offering Account", {"parent": row.offering, "lob": row.line_of_business, "mandate": row.mandate}, "credit_account") or \
                                             frappe.get_value("Associated Offering Account", {"parent": row.offering, "lob": row.line_of_business}, "credit_account")
                     
-                    
+                        frappe.log_error(title="credit",message=credit_account)
                         debit_account = frappe.get_value("Associated Offering Account", {"parent": row.offering, "lob": row.line_of_business, "mandate": row.mandate}, "debit_account") or \
                                         frappe.get_value("Associated Offering Account", {"parent": row.offering, "lob": row.line_of_business}, "debit_account")
-                        
+                        frappe.log_error(title="debit",message=debit_account)
                         existing_journal = frappe.db.exists("Journal Entry", {"sales_order": doc.name, "sales_order_item": row.name, "is_from_report": 1, "docstatus": 0})
                         
                         # startdate & Enddate Validation

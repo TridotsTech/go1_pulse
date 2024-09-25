@@ -256,6 +256,11 @@ after_migrate=[
 
 # User Data Protection
 # --------------------
+fixtures=[
+        {
+                "doctype":"Custom Field"
+        }
+]
 
 # user_data_fields = [
 # 	{
@@ -284,3 +289,4 @@ after_migrate=[
 # auth_hooks = [
 # 	"go1_pulse.auth.validate"
 # ]
+

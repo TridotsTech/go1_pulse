@@ -57,7 +57,7 @@ frappe.query_reports["Revenue Recognition Engine"] = {
 						if(exp_type){
 							const date = dialog.get_values();
 							frappe.call({
-								method: "revenue.revenue.doctype.common_project_mapper.common_project_mapper.make_journal_for_expense",
+								method: "go1_pulse.go1_pulse.doctype.common_project_mapper.common_project_mapper.make_journal_for_expense",
 								freeze: true,
 								freeze_message: __("Creating Journal"),
 								args: {
