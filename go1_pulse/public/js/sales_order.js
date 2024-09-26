@@ -43,6 +43,7 @@ frappe.ui.form.on('Sales Order', {
                 }
             }
             if(! row.is_common_project){
+                console.log(1)
                 if(cur_frm.doc.customer){
                     return {
                         filters:{"customer": cur_frm.doc.customer}
@@ -417,9 +418,10 @@ var update_offering_hsn =  function(frm, cdt, cdn){
     if(child.is_common_project){
         frappe.call({
             method:"go1_pulse.api.get_common_project",
-            args: {offering: row.offering || "", lob:row.line_of_business || "", mandate:row.mandate || "",  cost_center: row.cost_center || ""},
+            args: {offering: child.offering || "", lob:child.line_of_business || "", mandate:child.mandate || "",  cost_center: child.cost_center || ""},
             callback: function(res){
                 if(res.message){
+                    console.log(res.message)
                     frappe.model.set_value(cdt, cdn, "project",res.message);
                 }
                 else{

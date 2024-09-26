@@ -5,17 +5,18 @@ from frappe import _
 from frappe.model.utils.user_settings import get_user_settings
 import json
 from datetime import datetime, timedelta
-from go1_pulse.queries import get_project_activity_types_query, get_filtered_users_query,fetch_projects_query,get_employee_query,get_data_query
+from go1_pulse.queries import get_filtered_users_query,fetch_projects_query,get_employee_query,get_data_query
 
 @frappe.whitelist()
-def get_project_activity_types( txt, filters):
+def get_project_activity_types(doctype, txt, searchfield, start, page_len, filters):
 	condition=''
 	if txt:
-		condition += " AND activity_type like '%{}%'".format(txt)
-	project=filters.get("project")
-	return get_project_activity_types_query(project, condition)	
-
-
+		condition += " AND activity_type like '%"+txt+"%'"
+	query = """ SELECT activity_type as name FROM `tabLOB Activity Type` LA
+				INNER JOIN `tabLine of Business` LB ON LA.parent = LB.name
+				INNER JOIN `tabProject` P ON LB.name = P.lob
+				WHERE P.name='{project}' {condition}""".format(project=filters.get("project"),condition=condition)
+	return frappe.db.sql(query)
 @frappe.whitelist()
 def get_filtered_users(doctype, txt, searchfield, start, page_len, filters):
 	condition=''

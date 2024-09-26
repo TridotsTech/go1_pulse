@@ -152,11 +152,6 @@ doc_events = {
                 "on_update_after_submit":  ["go1_pulse.api.update_common_project",
                                             "go1_pulse.api.update_common_project_mapper",
                                             "go1_pulse.api.check_billing_percentage",
-                        ],
-                "before_update_after_submit":[
-                                        "go1_pulse.api.update_so_tag",
-                                        "go1_pulse.api.generic_so_update_validation",
-                                        "go1_pulse.api.so_update_approval",
                         ]
         },
         "Common Project Mapper": {
