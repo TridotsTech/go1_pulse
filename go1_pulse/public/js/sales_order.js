@@ -1,6 +1,81 @@
 
 frappe.ui.form.on('Sales Order', {
+    refresh:function(frm){
+        
+        cur_frm.fields_dict.items.grid.get_field('billing_method_details').get_query = function(frm, cdt, cdn){
+            let row = locals[cdt][cdn];
+            let bm_list=[];
+            console.log(1)
+            if(row.billing_method){
+                frappe.call({
+                    method: "go1_pulse.api.get_billing_details",
+                    args:{parent : row.billing_method},
+                    async: false,
+                    callback: function(res){
+                        bm_list = res.message;
+                    },
+                });
+            }
+            return { filters:{"name":["in",bm_list ]} };
+        };
 
+
+        cur_frm.fields_dict.items.grid.get_field('project').get_query = function(frm, cdt, cdn){
+            let row= locals[cdt][cdn];
+            let p_list=0;
+            if(row.is_common_project){
+                frappe.call({
+                    method:"go1_pulse.api.get_project_list",
+                    args: {offering : row.offering || "", mandate: row.mandate || "", lob: row.line_of_business || "",  cost_center: row.cost_center || ""},
+                    async: false,
+                    callback: function(res){
+                        p_list = res.message;
+                    }
+                });
+                if(p_list){
+                    if(row.mandate || row.line_of_business){
+                        return {filters:{"name":["in",p_list ]
+                        }};
+                    }
+                    else{
+                        return {filters:{"cost_center":row.cost_center}};
+                    }
+                }
+            }
+            if(! row.is_common_project){
+                if(cur_frm.doc.customer){
+                    return {
+                        filters:{"customer": cur_frm.doc.customer}
+                    }
+                }
+                else{ 
+                    return {
+                        filters:{"cost_center":row.cost_center}
+                    };
+                 }
+            }
+        };
+
+
+
+        cur_frm.fields_dict.items.grid.get_field('link_purchase_order').get_query = function(frm, cdt, cdn){
+            let row = locals[cdt][cdn]
+            if(row.linked_purchase_order){
+                return {
+                        filters:{"name": ["not in" , row.linked_purchase_order.split("\n") ]}
+                    }
+            }
+        };
+        
+
+
+        cur_frm.refresh_field("items");
+        cur_frm.refresh_field("billing_methods");
+        // frm.remove_custom_button('Update Items')
+
+
+    },
+    
     //Generating Billing Methods
     get_billing_methods: function(frm){
         if(cur_frm.doc.docstatus === 0){
@@ -61,7 +136,7 @@ frappe.ui.form.on('Sales Order', {
                 let date = d.actual_start_date ? d.actual_start_date :d.start_date;
                 let nom = 0;
 
-                if( d.revenue_method == "Equal revenue over the contract period" && (!d.end_date || !d.start_date)){
+                if( d.go1_pulse_method == "Equal revenue over the contract period" && (!d.end_date || !d.start_date)){
                     return
                 }
                 

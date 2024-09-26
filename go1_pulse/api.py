@@ -495,6 +495,7 @@ def create_journal_for_make_equal_revenue(row=None,doc=None,billable_amt=None,tr
 
 @frappe.whitelist()
 def make_equal_revenue(c_date=None, so=None, is_from_report=None):
+	frappe.log_error(title="1",message=c_date)
 	if not so:
 		return
 
@@ -511,6 +512,7 @@ def make_equal_revenue(c_date=None, so=None, is_from_report=None):
 
 
 def process_revenue_item(doc, row, c_date, is_from_report, messages):
+	frappe.log_error(title="2",message=doc)
 	last_posting_date = frappe.db.get_list("Journal Entry",filters={"sales_order": doc.name, "sales_order_item": row.name, "docstatus": 1},
 						fields=["posting_date"], order_by='posting_date desc',page_length=1)
 	last_posting_date = last_posting_date[0]['posting_date'] if last_posting_date else None
