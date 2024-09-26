@@ -556,7 +556,8 @@ def create_journal_entry(doc, row, posting_date, billable_amt, is_from_report, m
 	frappe.log_error(title="credit_account",message=credit_account)
 	frappe.log_error(title="debit_account",message=debit_account)
 	frappe.log_error(title="row",message=row)
-
+	
+							
 	company_currency = frappe.defaults.get_global_default("currency")
 	exchange_rate = get_exchange_rate(doc.currency, company_currency, posting_date) if doc.currency != company_currency else 1
 
@@ -571,7 +572,7 @@ def create_journal_entry(doc, row, posting_date, billable_amt, is_from_report, m
 			{
 				"account": credit_account,
 				"party_type": "Customer" if frappe.get_value("Account", credit_account, "account_type") in ["Receivable"] else None,
-				"party": doc.customer,
+				"party": doc.customer if frappe.get_value("Account", credit_account, "account_type") in ["Receivable"] else None,
 				"credit": billable_amt,
 				"credit_in_account_currency": billable_amt * exchange_rate,
 				"so_currency": doc.currency,
@@ -582,7 +583,7 @@ def create_journal_entry(doc, row, posting_date, billable_amt, is_from_report, m
 			{
 				"account": debit_account,
 				"party_type": "Customer" if frappe.get_value("Account", debit_account, "account_type") in ["Receivable"] else None,
-				"party": doc.customer,
+				"party": doc.customer if frappe.get_value("Account", debit_account, "account_type") in ["Receivable"] else None,
 				"debit": billable_amt,
 				"debit_in_account_currency": billable_amt * exchange_rate,
 				"so_currency": doc.currency,
@@ -593,8 +594,10 @@ def create_journal_entry(doc, row, posting_date, billable_amt, is_from_report, m
 		]
 	})
 	new_journal.insert()
-	frappe.log_error(title="new_journal",message=new_journal)
+	
 	frappe.db.commit()
+	frappe.log_error(title="new_journal",message=new_journal)
+	
 
 
 @frappe.whitelist()
