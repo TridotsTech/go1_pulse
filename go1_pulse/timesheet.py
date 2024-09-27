@@ -336,7 +336,7 @@ def update_timesheet_fields(login_manager):
 
 		if not user_settings or user_settings == "{}":
 			path = frappe.get_module_path("go1_pulse")
-			timesheet_json = os.path.join(path, "time_sheet_fields.json")
+			timesheet_json = os.path.join(path, "timesheet_fields.json")
 			with open(timesheet_json) as jsonFile:
 				jsonObject = json.load(jsonFile)
 				jsonObject["updated_on"] = now()

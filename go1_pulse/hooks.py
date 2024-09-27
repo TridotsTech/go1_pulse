@@ -122,6 +122,7 @@ permission_query_conditions = {
 # override_doctype_class = {
 # 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
+on_session_creation = "go1_pulse.timesheet.update_timesheet_fields"
 override_doctype_class = {
     "Sales Invoice": "go1_pulse.override_class_method.SalesInvoiceOR",
 }
