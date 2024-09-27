@@ -6,7 +6,7 @@ frappe.ui.form.on('Employee Salary Importer', {
 		if (frm.doc.docstatus === 1 && !frm.doc.cost_allocation_reference){
 			frm.add_custom_button(__("Process Cost Allocation"), function () {
 			frappe.call({
-				method: "go1_pusle.go1_pusle.doctype.employee_salary_importer.employee_salary_importer.create_timesheet_aggregator",
+				method: "go1_pulse.go1_pulse.doctype.employee_salary_importer.employee_salary_importer.create_timesheet_aggregator",
 				freeze:true,
 				freeze_message: "Creating Cost Allocation", 
 				args: {

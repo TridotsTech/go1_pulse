@@ -332,6 +332,7 @@ def check_for_submit(changed_data, approved_data):
 @frappe.whitelist(allow_guest=True)
 def update_timesheet_fields(login_manager):
 	if frappe.session.user!="Guest":
+		frappe.log_error(2)
 		user_settings = get_user_settings("Timesheet")
 
 		if not user_settings or user_settings == "{}":
