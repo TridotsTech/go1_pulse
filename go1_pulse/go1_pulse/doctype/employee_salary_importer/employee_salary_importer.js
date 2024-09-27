@@ -14,6 +14,7 @@ frappe.ui.form.on('Employee Salary Importer', {
 					end_date: frm.doc.end_date,
 				},
 				callback: function (r) {
+					console.log(r)
 					frm.set_value("cost_allocation_reference" , r.message);
 					frm.save("Update")
 					}

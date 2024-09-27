@@ -415,21 +415,21 @@ var update_offering_hsn =  function(frm, cdt, cdn){
 
 
 
-    if(child.is_common_project){
-        frappe.call({
-            method:"go1_pulse.api.get_common_project",
-            args: {offering: child.offering || "", lob:child.line_of_business || "", mandate:child.mandate || "",  cost_center: child.cost_center || ""},
-            callback: function(res){
-                if(res.message){
-                    console.log(res.message)
-                    frappe.model.set_value(cdt, cdn, "project",res.message);
-                }
-                else{
-                    frappe.msgprint("Common project could not be found");
-                }
-            },
-        });
-    }
+    // if(child.is_common_project){
+    //     frappe.call({
+    //         method:"go1_pulse.api.get_common_project",
+    //         args: {offering: child.offering || "", lob:child.line_of_business || "", mandate:child.mandate || "",  cost_center: child.cost_center || ""},
+    //         callback: function(res){
+    //             if(res.message){
+    //                 console.log(res.message)
+    //                 frappe.model.set_value(cdt, cdn, "project",res.message);
+    //             }
+    //             else{
+    //                 frappe.msgprint("Common project could not be found");
+    //             }
+    //         },
+    //     });
+    // }
 
       
 

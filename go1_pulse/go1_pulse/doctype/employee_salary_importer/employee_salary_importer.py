@@ -100,6 +100,7 @@ def make_journal_entry(datas = None, args = None, ta_name= None):
 
 @frappe.whitelist()
 def create_timesheet_aggregator(start_date, end_date):
+	frappe.log_error(title="start_date",message=start_date)
 	emp_sal_datas = get_customer_timesheets(start_date=start_date, end_date=end_date)
 	if not emp_sal_datas:
 		return
