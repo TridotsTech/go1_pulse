@@ -657,11 +657,323 @@ def recognised_revenue_report(condition,date):
 
 
 
+# def revenue_recognition_engine_query(condition=None,date=None):
+#     datas =  frappe.db.sql("""
+# 			SELECT
+# 				so.name AS sales_order,
+# 			 	so.company,
+# 				so.transaction_date,
+# 				soi.item_code,
+# 				soi.name as so_item,
+# 				soi.mandate,
+# 				soi.offering,
+# 				soi.revenue_method,
+# 				soi.start_date,
+# 				soi.end_date,
+# 				soi.cost_center,
+# 				soi.project,
+# 			 	so.customer,
+# 				soi.end_customer,
+# 				so.currency as so_currency,
+# 				soi.net_amount,
+# 				(SELECT project_manager FROM `tabProject` WHERE name = soi.project) AS project_manager,
+# 				soi.base_net_amount,
+# 			 	soi.revenue_recognised_amount,
+# 			 	so.conversion_rate,
+# 				COALESCE(
+# 					(
+# 					SELECT
+# 						SUM(jea.debit_in_account_currency/ jea.so_exchange_rate)
+# 					FROM
+# 						`tabJournal Entry` je
+# 					LEFT JOIN
+# 						`tabJournal Entry Account` jea
+# 					ON
+# 						je.name = jea.parent
+# 					WHERE
+# 						sales_order = so.name
+# 						AND sales_order_item = soi.name
+# 						AND je.docstatus = 1
+# 					),
+# 					0
+# 				) AS journal_entry_value,
+# 				CASE
+# 					WHEN
+# 						(
+# 							COALESCE(
+# 								(
+# 									SELECT ABS(SUM(sii.amount) )
+# 									FROM `tabSales Invoice`si LEFT JOIN `tabSales Invoice Item`sii ON si.name = sii.parent
+# 									WHERE sii.sales_order = so.name AND sii.so_detail = soi.name AND si.docstatus = 1 AND si.is_return = 1
+# 								), 0
+# 							)
+# 							-
+# 							COALESCE(
+# 								(
+# 									SELECT ABS(SUM(sii.amount))
+# 									FROM `tabSales Invoice`si LEFT JOIN `tabSales Invoice Item`sii ON si.name = sii.parent
+# 									WHERE sii.sales_order = so.name AND sii.so_detail = soi.name AND si.docstatus = 1
+# 								), 0
+# 							)
+# 			 			) < 0
+# 			 		THEN
+# 			 			0
+# 			 		ELSE
+# 			 			(
+# 							COALESCE(
+# 								(
+# 									SELECT ABS(SUM(sii.amount))
+# 									FROM `tabSales Invoice`si LEFT JOIN `tabSales Invoice Item`sii ON si.name = sii.parent
+# 									WHERE sii.sales_order = so.name AND sii.so_detail = soi.name AND si.docstatus = 1 AND si.is_return = 1
+# 								), 0
+# 							)
+# 							-
+# 							COALESCE(
+# 								(
+# 									SELECT ABS(SUM(sii.amount))
+# 									FROM `tabSales Invoice`si LEFT JOIN `tabSales Invoice Item`sii ON si.name = sii.parent
+# 									WHERE sii.sales_order = so.name AND sii.so_detail = soi.name AND si.docstatus = 1
+# 								), 0
+# 							)
+# 			 			)
+# 			 	END AS credit_note_value,
+# 				-- COALESCE(
+# 				-- 	(
+# 				-- 	SELECT
+# 				-- 		SUM(jea.debit_in_account_currency/ jea.so_exchange_rate)
+# 				-- 	FROM
+# 				-- 		`tabJournal Entry` je
+# 				-- 	LEFT JOIN
+# 				-- 		`tabJournal Entry Account` jea
+# 				-- 	ON
+# 				-- 		je.name = jea.parent
+# 				-- 	WHERE
+# 				-- 		sales_order = so.name
+# 				-- 		AND sales_order_item = soi.name
+# 				-- 		AND je.docstatus = 1
+# 				-- 	),
+# 				-- 	0
+# 				-- ) + (soi.revenue_recognised_amount) AS bc_recognised_revenue,
+# 				COALESCE(
+# 					(
+# 					SELECT
+# 						SUM(CASE WHEN jea.so_currency='INR' AND jea.credit>0 THEN
+# 								jea.credit
+# 							WHEN jea.so_currency='INR' AND jea.debit>0 THEN
+# 								-jea.debit
+# 							WHEN jea.so_currency<>'INR' AND jea.debit>0 THEN
+# 								-(jea.debit/jea.so_exchange_rate)
+# 							WHEN jea.so_currency<>'INR' AND jea.credit>0 THEN
+# 								(jea.credit/jea.so_exchange_rate)
+# 							ELSE 0 
+# 						END ) AS journal_entry_value
+# 					FROM
+# 						`tabJournal Entry Account` jea
+
+# 					INNER JOIN
+# 						`tabJournal Entry` je
+
+# 					ON
+# 						je.name = jea.parent
+# 					WHERE
+# 						sales_order = so.name
+# 						AND sales_order_item = soi.name
+# 						AND je.docstatus = 1
+# 						AND (jea.credit>0 OR jea.debit>0)
+# 						AND jea.account IN(SELECT name FROM `tabAccount` WHERE parent_account='Revenue From Operations - IBSL')
+# 					),
+# 					0
+# 				) + (soi.revenue_recognised_amount) AS bc_recognised_revenue,
+# 				CASE
+# 					WHEN
+# 						(soi.net_amount -(
+# 						COALESCE(
+# 							(
+# 							SELECT
+# 								SUM(jea.debit_in_account_currency / jea.so_exchange_rate)
+# 							FROM
+# 								`tabJournal Entry` je
+# 							LEFT JOIN `tabJournal Entry Account` jea
+# 							ON je.name = jea.parent
+# 							WHERE
+# 								sales_order = so.name
+# 								AND sales_order_item = soi.name
+# 								AND je.docstatus = 1
+# 							),
+# 							0
+# 						) + (soi.revenue_recognised_amount))) > 0
+# 					THEN
+# 						soi.net_amount -(
+# 						COALESCE(
+# 							(
+# 							SELECT
+# 								SUM(jea.debit_in_account_currency / jea.so_exchange_rate)
+# 							FROM
+# 								`tabJournal Entry` je
+# 							LEFT JOIN `tabJournal Entry Account` jea
+# 							ON je.name = jea.parent
+# 							WHERE
+# 								sales_order = so.name
+# 								AND sales_order_item = soi.name
+# 								AND je.docstatus = 1
+# 							),
+# 							0
+# 						) + (soi.revenue_recognised_amount))
+# 					ELSE 0
+# 				END AS bc_unrecognised_revenue,
+# 				-- COALESCE(
+# 				-- 	(
+# 				-- 	SELECT
+# 				-- 		SUM(jea.debit_in_account_currency)
+# 				-- 	FROM
+# 				-- 		`tabJournal Entry` je
+# 				-- 	LEFT JOIN
+# 				-- 		`tabJournal Entry Account` jea
+# 				-- 	ON
+# 				-- 		je.name = jea.parent
+# 				-- 	WHERE
+# 				-- 		sales_order = so.name
+# 				-- 		AND sales_order_item = soi.name
+# 				-- 		AND je.docstatus = 1
+# 				-- 	),
+# 				-- 	0
+# 				-- ) + (soi.revenue_recognised_amount * so.conversion_rate) AS recognised_revenue,
+# 				COALESCE(
+# 					(
+# 					SELECT
+# 						SUM(CASE WHEN jea.so_currency='INR' AND jea.credit>0 THEN
+# 								jea.credit
+# 							WHEN jea.so_currency='INR' AND jea.debit>0 THEN
+# 								-jea.debit
+# 							WHEN jea.so_currency<>'INR' AND jea.credit>0 THEN
+# 								jea.credit
+# 							WHEN jea.so_currency<>'INR' AND jea.debit>0 THEN
+# 								-jea.debit
+# 							ELSE 0 
+# 						END) AS journal_entry_value
+# 					FROM
+# 						`tabJournal Entry Account` jea
+# 					INNER JOIN
+# 						`tabJournal Entry` je
+						
+# 					ON
+# 						je.name = jea.parent
+# 					WHERE
+# 						sales_order = so.name
+# 						AND sales_order_item = soi.name
+# 						AND je.docstatus = 1
+# 						AND (jea.credit>0 OR jea.debit>0)
+# 						AND jea.account IN(SELECT name FROM `tabAccount` WHERE parent_account='Revenue From Operations - IBSL')
+# 					),
+# 					0
+# 				)  + (soi.revenue_recognised_amount * so.conversion_rate) AS recognised_revenue,
+# 				CASE
+# 					WHEN
+# 						(soi.base_net_amount -(
+# 						COALESCE(
+# 							(
+# 							SELECT
+# 								SUM(jea.debit_in_account_currency)
+# 							FROM
+# 								`tabJournal Entry` je  
+# 							LEFT JOIN `tabJournal Entry Account` jea 
+# 							ON je.name = jea.parent
+# 							WHERE
+# 								sales_order = so.name
+# 								AND sales_order_item = soi.name
+# 								AND je.docstatus = 1
+# 							),
+# 							0
+# 						) + (soi.revenue_recognised_amount * so.conversion_rate))) > 0
+# 					THEN 
+# 						soi.base_net_amount -(
+# 						COALESCE(
+# 							(
+# 							SELECT
+# 								SUM(jea.debit_in_account_currency)
+# 							FROM
+# 								`tabJournal Entry` je  
+# 							LEFT JOIN `tabJournal Entry Account` jea 
+# 							ON je.name = jea.parent
+# 							WHERE
+# 								sales_order = so.name
+# 								AND sales_order_item = soi.name
+# 								AND je.docstatus = 1
+# 							),
+# 							0
+# 						) + (soi.revenue_recognised_amount * so.conversion_rate))
+# 					ELSE 0 
+# 				END AS unrecognised_revenue,
+# 				(
+# 					SELECT
+# 						estimated_costing
+# 					FROM
+# 						`tabProject`
+# 					WHERE
+# 						name = soi.project
+# 				) AS budget_cost,
+# 				(
+# 					SELECT
+# 						total_employee_cost + total_purchase_cost
+# 					FROM
+# 						`tabProject`
+# 					WHERE
+# 						name = soi.project
+# 				) AS actual_cost,
+# 				CASE
+# 					WHEN (
+# 						SELECT
+# 							ROUND(((total_employee_cost + total_purchase_cost) / estimated_costing) * 100)
+# 						FROM
+# 							`tabProject`
+# 						WHERE
+# 							name = soi.project
+# 						) > 100 THEN 100
+# 					ELSE (
+# 						SELECT
+# 							ROUND(((total_employee_cost + total_purchase_cost) / estimated_costing) * 100)
+# 						FROM
+# 							`tabProject`
+# 						WHERE
+# 							name = soi.project
+# 						)
+# 				END AS per_complete,
+# 				(
+# 					SELECT je.posting_date
+# 					FROM `tabJournal Entry` as je
+# 					WHERE sales_order= so.name AND sales_order_item = soi.name AND je.docstatus = 1
+# 					ORDER BY posting_date DESC
+# 					LIMIT 1
+# 				) as recognised_until,
+# 				(
+# 					SELECT je.posting_date
+# 					FROM `tabJournal Entry` as je
+# 					WHERE sales_order= so.name AND sales_order_item = soi.name AND je.docstatus = 1
+# 					ORDER BY je.posting_date DESC
+# 					LIMIT 1
+# 			 	) AS last_journal_date
+# 			FROM
+# 				`tabSales Order` so
+# 			LEFT JOIN 
+# 				`tabSales Order Item` soi ON so.name = soi.parent
+# 			WHERE
+# 				so.docstatus = 1
+# 			AND soi.parent = so.name
+# 			AND
+# 				soi.start_date <= '{date}'
+# 			AND 
+# 				soi.end_date >= '{date}'  {condition}
+# 			""".
+#    format(condition=condition, date=date), as_dict=True)
+#     frappe.log_error(title="conditiason",message=condition)  
+#     frappe.log_error(title="query_data",message=datas)  
+#     return datas
+	
 def revenue_recognition_engine_query(condition=None,date=None):
     datas =  frappe.db.sql("""
 			SELECT
 				so.name AS sales_order,
-			 	so.company,
+			 	so.company AS company,
 				so.transaction_date,
 				soi.item_code,
 				soi.name as so_item,
@@ -958,14 +1270,8 @@ def revenue_recognition_engine_query(condition=None,date=None):
 				`tabSales Order Item` soi ON so.name = soi.parent
 			WHERE
 				so.docstatus = 1
-			AND soi.parent = so.name
-			AND
-				soi.start_date <= '{date}'
-			AND 
-				soi.end_date >= '{date}'  {condition}
-			""".
-   format(condition=condition, date=date), as_dict=True)
-    frappe.log_error(title="conditiason",message=condition)  
-    frappe.log_error(title="query_data",message=datas)  
+				AND soi.parent = so.name   {condition}
+			""".format(condition=condition,date=date, as_dict=True))
+    frappe.log_error(title="data",message=datas)
     return datas
-	
+		
