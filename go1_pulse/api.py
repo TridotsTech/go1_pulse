@@ -342,8 +342,9 @@ def update_billing_status(si_doc= None, event= None):
 			if list_bm:
 				for bm in list_bm:
 					bm_doc = frappe.get_doc("Sales Order Billing Method", bm)
+					is_billed=1 if si_doc.docstatus == 1  else 0
 					if not bm_doc.cpm_details and si_doc.docstatus !=0:
-						is_billed=1 if si_doc.docstatus == 1  else 0
+						
 						frappe.db.set_value("Sales Order Billing Method", bm, {"is_billed":is_billed,"from_april": is_billed})
 		
 						if frappe.db.exists("Associated Activity", {"billing_reference":bm}):

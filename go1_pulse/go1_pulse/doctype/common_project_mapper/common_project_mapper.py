@@ -69,13 +69,19 @@ class CommonProjectMapper(Document):
 def get_timesheet_billing_hours(project = None, f_date = None, t_date= None):
     if not project:
         return
-    billing_hrs = get_billing_hours(project, f_date, t_date)
-    if billing_hrs and billing_hrs[0]:
-        if billing_hrs[0][0]:
-            return billing_hrs[0][0]
+    billing_hrs = frappe.db.sql("""SELECT 
+                                SUM(hours) AS hours
+                                FROM `tabTimesheet Detail`
+                                WHERE project = '{0}' AND approval_status= 'Approved' AND docstatus = 1 AND to_time BETWEEN '{1}' AND '{2}' 
+                                GROUP BY project""" .format(project, f_date, t_date))
+    if billing_hrs:
+        if billing_hrs[0]:
+            if billing_hrs[0][0]:
+                return billing_hrs[0][0]
         else:
             frappe.throw("No Record found")
-
+            
+            
 @frappe.whitelist()
 def make_journal_for_poc(source, posting_date, is_from_report = None):
     msg = []
