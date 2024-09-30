@@ -161,38 +161,38 @@ frappe.ui.form.on('Common Project Mapper', {
 		}
 		
 
-		if (frm.doc.offering_classification == "Recurring Revenue") {
-			var msg=""
-			frm.add_custom_button(__("Test Revenue Recognition"), function () {
-				let d = new frappe.ui.Dialog({
-					title: __("Test Revenue Recognition"),
-					fields: [
-						{
-							"label": __("Date"),
-							"fieldname": "date",
-							"fieldtype": "Date",
-							"reqd": 1,
-						},
-					],
-					primary_action: function () {
-						const data = d.get_values();
+		// if (frm.doc.offering_classification == "Recurring Revenue") {
+		// 	var msg=""
+		// 	frm.add_custom_button(__("Test Revenue Recognition"), function () {
+		// 		let d = new frappe.ui.Dialog({
+		// 			title: __("Test Revenue Recognition"),
+		// 			fields: [
+		// 				{
+		// 					"label": __("Date"),
+		// 					"fieldname": "date",
+		// 					"fieldtype": "Date",
+		// 					"reqd": 1,
+		// 				},
+		// 			],
+		// 			primary_action: function () {
+		// 				const data = d.get_values();
 
-						frappe.call({
-							method: "go1_pulse.api.make_equal_revenue",
-							freeze: true,
-							freeze_message: __("Creating Journal"),
-							args: {
-								c_date: data.date,
-								so: frm.doc.sales_order
-							}
-						});
-						d.hide();
-					},
-					primary_action_label: __("Create")
-				});
-				d.show();
-			});
-		}
+		// 				frappe.call({
+		// 					method: "go1_pulse.api.make_equal_revenue",
+		// 					freeze: true,
+		// 					freeze_message: __("Creating Journal"),
+		// 					args: {
+		// 						c_date: data.date,
+		// 						so: frm.doc.sales_order
+		// 					}
+		// 				});
+		// 				d.hide();
+		// 			},
+		// 			primary_action_label: __("Create")
+		// 		});
+		// 		d.show();
+		// 	});
+		// }
 
 
 		if (frm.doc.offering_classification == "Percentage of Completion"){
