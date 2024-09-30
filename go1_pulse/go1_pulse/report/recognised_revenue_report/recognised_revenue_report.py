@@ -117,13 +117,13 @@ def get_columns(filters):
 			"options": "currency",
 			"width": 200,
 		},
-		{
-			"fieldname": "billed_till_march",
-			"label": "Base Currency Billed (Till 31st March 2023)",
-			"fieldtype": "Currency",
-			"options": "currency",
-			"width": 300,
-		},
+		# {
+		# 	"fieldname": "billed_till_march",
+		# 	"label": "Base Currency Billed (Till 31st March 2023)",
+		# 	"fieldtype": "Currency",
+		# 	"options": "currency",
+		# 	"width": 300,
+		# },
 		{
 			"fieldname": "billed_from_april",
 			"label": "Base Currency Billed (From 1st April 2023)",
@@ -138,13 +138,13 @@ def get_columns(filters):
 			"options": "currency",
 			"width": 200,
 		},
-		{
-			"fieldname": "recognised_revenue_till_march",
-			"label": "Base Currency Rev. Recog. (Till 31st March 2023)",
-			"fieldtype": "Currency",
-			"options": "currency",
-			"width": 300,
-		},
+		# {
+		# 	"fieldname": "recognised_revenue_till_march",
+		# 	"label": "Base Currency Rev. Recog. (Till 31st March 2023)",
+		# 	"fieldtype": "Currency",
+		# 	"options": "currency",
+		# 	"width": 300,
+		# },
 		{
 			"fieldname": "recognised_revenue_from_april",
 			"label": "Base Currency Rev. Recog. (From 1st April 2023)",
@@ -172,13 +172,13 @@ def get_columns(filters):
 			"fieldtype": "Currency",
 			"width": 200,
 		},
-		{
-			"fieldname": "billed_till_march_inr",
-			"label": "INR Billed (Till 31st March 2023)",
-			"fieldtype": "Currency",
-			"options": "",
-			"width": 300,
-		},
+		# {
+		# 	"fieldname": "billed_till_march_inr",
+		# 	"label": "INR Billed (Till 31st March 2023)",
+		# 	"fieldtype": "Currency",
+		# 	"options": "",
+		# 	"width": 300,
+		# },
 		{
 			"fieldname": "billed_from_april_inr",
 			"label": "INR Billed (From 1st April 2023)",
@@ -193,13 +193,13 @@ def get_columns(filters):
 			"options": "",
 			"width": 200,
 		},
-		{
-			"fieldname": "recognised_revenue_till_march_inr",
-			"label": "INR Rev. Recog. (Till 31st March 2023)",
-			"fieldtype": "Currency",
-			"options": "",
-			"width": 300,
-		},
+		# {
+		# 	"fieldname": "recognised_revenue_till_march_inr",
+		# 	"label": "INR Rev. Recog. (Till 31st March 2023)",
+		# 	"fieldtype": "Currency",
+		# 	"options": "",
+		# 	"width": 300,
+		# },
 		{
 			"fieldname": "recognised_revenue_from_april_inr",
 			"label": "INR Rev. Recog. (From 1st April 2023)",
