@@ -137,7 +137,7 @@ frappe.ui.form.on('Sales Order', {
                 let date = d.actual_start_date ? d.actual_start_date :d.start_date;
                 let nom = 0;
 
-                if( d.go1_pulse_method == "Equal revenue over the contract period" && (!d.end_date || !d.start_date)){
+                if( d.revenue_method == "Equal revenue over the contract period" && (!d.end_date || !d.start_date)){
                     return
                 }
                 
